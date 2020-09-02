@@ -23,6 +23,16 @@ public class Temperatura {
     @JoinColumn(name = "pais_id", referencedColumnName = "pais_id")
     private Pais pais;
 
+    public Temperatura(){
+
+    }
+
+    public Temperatura(Pais pais, Integer anio, Double grados){
+        this.pais = pais;
+        this.anioTemperatura = anio;
+        this.grados = grados;
+    }
+
     public Integer getTemperaturaId() {
         return temperaturaId;
     }

@@ -17,17 +17,14 @@ public class TemperaturaService {
     @Autowired
     PaisService paisService;
 
-    public Temperatura registrarTemp(Integer codigoPais, Integer anio, Double grados) {
+    public Optional<Temperatura> registrarTemp(Integer codigoPais, Integer anio, Double grados) {
         Pais pais = paisService.buscarPorCodigo(codigoPais);
         if (pais == null) {
-            return null;
+            return Optional.empty();
         }
-        Temperatura temp = new Temperatura();
-        temp.setPais(pais);
-        temp.setAnioTemperatura(anio);
-        temp.setGrados(grados);
+        Temperatura temp = new Temperatura(pais, anio, grados);
         tempRepo.save(temp);
-        return temp;
+        return Optional.of(temp);
     }
 
     public Temperatura obtenerPorId(Integer id) {
