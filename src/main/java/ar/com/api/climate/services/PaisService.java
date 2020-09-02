@@ -21,17 +21,18 @@ public class PaisService {
         return pais != null ? Optional.of(pais) : Optional.empty();           
     }
 
-    public Pais actualizarNombrePais(Pais pais) {
-        return paisRepo.save(pais);
+    public Optional<Pais> actualizarNombrePais(Integer id, String nombre) {
+        Optional<Pais> paisOp = buscarPorId(id);
+        if(paisOp.isEmpty()){
+            return Optional.empty();
+        }
+        paisOp.get().setNombre(nombre);
+        paisRepo.save(paisOp.get());
+        return paisOp;
     }
 
-    public Pais buscarPorId(Integer id) {
-        Optional<Pais> opPais = paisRepo.findById(id);
-
-        if (opPais.isPresent())
-            return opPais.get();
-        else
-            return null;
+    public Optional<Pais> buscarPorId(Integer id) {
+        return paisRepo.findById(id);
 
     }
 

@@ -58,32 +58,21 @@ public class PaisController {
 
     @GetMapping("/api/paises/{id}")
     public ResponseEntity<PaisResponse> buscarPorIdPais(@PathVariable Integer id) {
-        Pais pais = paisService.buscarPorId(id);
-        if (pais == null) {
+        Optional<Pais> paisOp = paisService.buscarPorId(id);
+        if (paisOp.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        PaisResponse pR = new PaisResponse();
-        pR.codigoPais = pais.getCodigoPais();
-        pR.nombre = pais.getNombre();
-        return ResponseEntity.ok(pR);
+        return ResponseEntity.ok(new PaisResponse(paisOp.get().getNombre(), paisOp.get().getCodigoPais()));
     }
 
     @PutMapping("/api/paises/{id}")
     public ResponseEntity<GenericResponse> actualizarNombrePais(@PathVariable Integer id,
             @RequestBody PaisModifRequest pMR) {
-        Pais pais = paisService.buscarPorId(id);
-        if (pais == null) {
+        Optional<Pais> paisOp = paisService.actualizarNombrePais(id, pMR.nombre);
+        if (paisOp.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-
-        pais.setNombre(pMR.nombre);
-        paisService.actualizarNombrePais(pais);
-
-        GenericResponse gR = new GenericResponse();
-        gR.isOk = true;
-        gR.message = "Pais actualizado con éxito";
-
-        return ResponseEntity.ok(gR);
+        return ResponseEntity.ok(new GenericResponse(true, "Pais actualizado con éxito", paisOp.get().getPaisId()));
     }
 
 }
