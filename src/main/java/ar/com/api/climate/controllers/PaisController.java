@@ -39,25 +39,18 @@ public class PaisController {
     @GetMapping("/api/paises")
     public ResponseEntity<List<PaisResponse>> listaPaises(
             @RequestParam(value = "sinTemperaturas", required = false) boolean sinTemperaturas) {
-
         List<Pais> paises = new ArrayList<>();
         if (sinTemperaturas) {
             List<PaisResponse> listaPaisesSinTemp = new ArrayList<>();
             for (Pais p : paises) {
-                PaisResponse pR = new PaisResponse();
-                pR.codigoPais = p.getCodigoPais();
-                pR.nombre = p.getNombre();
-                listaPaisesSinTemp.add(pR);
+                PaisResponse pR = new PaisResponse(p.getNombre(), p.getCodigoPais());
+                listaPaisesSinTemp.add(pR); 
             }
             return ResponseEntity.ok(listaPaisesSinTemp);
         }
-
         List<PaisResponse> listaPaisesConTemp = new ArrayList<>();
         for (Pais p : paises) {
-            PaisResponse pR = new PaisResponse();
-            pR.codigoPais = p.getCodigoPais();
-            pR.nombre = p.getNombre();
-            pR.temperaturas = p.getTemperaturas();
+            PaisResponse pR = new PaisResponse(p.getNombre(), p.getCodigoPais(), p.getTemperaturas());
             listaPaisesConTemp.add(pR);
         }
         return ResponseEntity.ok(listaPaisesConTemp);
