@@ -17,19 +17,19 @@ public class TemperaturaService {
     @Autowired
     PaisService paisService;
 
-    public Optional<Temperatura> registrarTemp(Integer codigoPais, Integer anio, Double grados) {
-        Pais pais = paisService.buscarPorCodigo(codigoPais);
-        if (pais == null) {
-            return Optional.empty();
-        }
-        Temperatura temp = new Temperatura(pais, anio, grados);
-        tempRepo.save(temp);
-        return Optional.of(temp);
-    }
-
     public Optional<Temperatura> obtenerPorId(Integer id) {
         Optional<Temperatura> opTemp = tempRepo.findById(id);
         return opTemp.get() != null ? opTemp : Optional.empty();
+    }
+
+    public Optional<Temperatura> registrarTemp(Integer codigoPais, Integer anio, Double grados) {
+        Optional<Pais> paisOp = paisService.buscarPorCodigo(codigoPais);
+        if (paisOp.isEmpty()) {
+            return Optional.empty();
+        }
+        Temperatura temp = new Temperatura(paisOp.get(), anio, grados);
+        tempRepo.save(temp);
+        return Optional.of(temp);
     }
 
     public boolean delete(Integer id) {

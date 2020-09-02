@@ -32,7 +32,7 @@ public class TemperaturaController {
 
     @GetMapping("/api/temperaturas/paises/{codigoPais}")
     public ResponseEntity<List<Temperatura>> listaTemperaturasPorPais(@PathVariable Integer codigoPais) {
-        List<Temperatura> listaTemp = paisService.buscarPorCodigo(codigoPais).getTemperaturas();
+        List<Temperatura> listaTemp = paisService.buscarPorCodigo(codigoPais).get().getTemperaturas();
         return ResponseEntity.ok(listaTemp);
     }
 

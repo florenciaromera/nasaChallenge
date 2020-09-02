@@ -13,6 +13,11 @@ public class PaisService {
     @Autowired
     PaisRepo paisRepo;
 
+    public Optional<Pais> buscarPorId(Integer id) {
+        Optional<Pais> paisOp = paisRepo.findById(id);
+        return paisOp.get() != null ? paisOp : Optional.empty();
+    }
+
     public Optional<Pais> crearPais(Integer codigoPais, String nombre) {
         Pais pais = new Pais(codigoPais, nombre);
         if(!paisRepo.existsById(codigoPais)){
@@ -23,25 +28,15 @@ public class PaisService {
 
     public Optional<Pais> actualizarNombrePais(Integer id, String nombre) {
         Optional<Pais> paisOp = buscarPorId(id);
-        if(paisOp.isEmpty()){
-            return Optional.empty();
+        if(paisOp.isPresent()){
+            paisOp.get().setNombre(nombre);
+            paisRepo.save(paisOp.get());
         }
-        paisOp.get().setNombre(nombre);
-        paisRepo.save(paisOp.get());
-        return paisOp;
+        return paisOp.get() != null ? paisOp : Optional.empty();
     }
 
-    public Optional<Pais> buscarPorId(Integer id) {
-        return paisRepo.findById(id);
-
+    public Optional<Pais> buscarPorCodigo(Integer codigoPais) {
+        Optional<Pais> paisEncontrado = paisRepo.buscarPorCodigo(codigoPais);
+        return paisEncontrado.get() != null ? paisEncontrado : Optional.empty();
     }
-
-    public Pais buscarPorCodigo(Integer codigoPais) {
-        Pais paisEncontrado = paisRepo.buscarPorCodigo(codigoPais);
-        if (paisEncontrado == null) {
-            return null;
-        }
-        return paisEncontrado;
-    }
-
 }

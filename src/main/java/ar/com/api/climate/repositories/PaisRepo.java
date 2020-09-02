@@ -1,5 +1,7 @@
 package ar.com.api.climate.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,5 +14,5 @@ public interface PaisRepo extends JpaRepository<Pais, Integer> {
     // public boolean existsByCodigo(Integer codigoPais);
 
     @Query("select p from Pais p where p.codigoPais=:codigoPais")
-    public Pais buscarPorCodigo(Integer codigoPais);
+    public Optional<Pais> buscarPorCodigo(Integer codigoPais);
 }
