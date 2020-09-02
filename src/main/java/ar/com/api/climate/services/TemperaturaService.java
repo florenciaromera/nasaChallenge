@@ -27,16 +27,18 @@ public class TemperaturaService {
         return Optional.of(temp);
     }
 
-    public Temperatura obtenerPorId(Integer id) {
+    public Optional<Temperatura> obtenerPorId(Integer id) {
         Optional<Temperatura> opTemp = tempRepo.findById(id);
-        if (opTemp == null) {
-            return null;
+        return opTemp.get() != null ? opTemp : Optional.empty();
+    }
+
+    public boolean delete(Integer id) {
+        Optional<Temperatura> tempOp = obtenerPorId(id);
+        if (tempOp.isEmpty()) {
+            return false;
         }
-        return opTemp.get();
+        tempOp.get().setAnioTemperatura(0);
+        tempRepo.save(tempOp.get());
+        return true;
     }
-
-    public void delete(Temperatura temp) {
-        tempRepo.save(temp);
-    }
-
 }

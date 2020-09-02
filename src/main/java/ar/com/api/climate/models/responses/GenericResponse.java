@@ -10,6 +10,11 @@ public class GenericResponse {
         
     }
 
+    public GenericResponse(boolean isOk, String message){
+        this.isOk = isOk;
+        this.message = message;
+    }
+
     public GenericResponse(boolean isOk, String message, Integer paisId){
         this.isOk = isOk;
         this.message = message;

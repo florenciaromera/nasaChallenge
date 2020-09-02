@@ -26,7 +26,8 @@ public class TemperaturaController {
         if (temp.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new GenericResponse(true, "Temperatura registrada con éxito", temp.get().getTemperaturaId()));
+        return ResponseEntity
+                .ok(new GenericResponse(true, "Temperatura registrada con éxito", temp.get().getTemperaturaId()));
     }
 
     @GetMapping("/api/temperaturas/paises/{codigoPais}")
@@ -38,16 +39,7 @@ public class TemperaturaController {
     // DELETE/temperaturas/{id}: no se borrará la temp id, debe cambiar el año a 0
     @DeleteMapping("/api/temperaturas/{id}")
     public ResponseEntity<GenericResponse> eliminarTemp(@PathVariable int id) {
-        Temperatura temp = temperaturaService.obtenerPorId(id);
-        if (temp == null) {
-            return ResponseEntity.notFound().build();
-        }
-        temp.setAnioTemperatura(0);
-        temperaturaService.delete(temp);
-
-        GenericResponse gR = new GenericResponse();
-        gR.isOk = true;
-        gR.message = "Temperatura eliminada";
-        return ResponseEntity.ok(gR);
+        return temperaturaService.delete(id) ? ResponseEntity.ok(new GenericResponse(true, "Temperatura eliminada"))
+                : ResponseEntity.badRequest().build();
     }
 }
