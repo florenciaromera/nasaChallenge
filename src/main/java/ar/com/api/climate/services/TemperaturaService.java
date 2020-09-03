@@ -27,9 +27,14 @@ public class TemperaturaService {
         if (paisOp.isEmpty()) {
             return Optional.empty();
         }
+
         Temperatura temp = new Temperatura(paisOp.get(), anio, grados);
-        tempRepo.save(temp);
-        return Optional.of(temp);
+        List<Temperatura> temperaturas = paisOp.get().getTemperaturas();
+        boolean añoTemp = temperaturas.stream().anyMatch(t -> t.getAnioTemperatura().equals(temp.getAnioTemperatura()));
+        if(!añoTemp){
+            tempRepo.save(temp);
+        }
+        return !añoTemp ? Optional.of(temp) : Optional.empty();
     }
 
     public boolean delete(Integer id) {
