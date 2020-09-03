@@ -1,5 +1,6 @@
 package ar.com.api.climate.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,8 @@ public class PaisService {
         Optional<Pais> paisEncontrado = paisRepo.buscarPorCodigo(codigoPais);
         return paisEncontrado.get() != null ? paisEncontrado : Optional.empty();
     }
+
+	public List<Pais> obtenerListaPaises() {
+		return paisRepo.findAll();
+	}
 }
