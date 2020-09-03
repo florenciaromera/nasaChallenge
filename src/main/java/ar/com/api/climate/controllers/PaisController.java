@@ -21,10 +21,11 @@ public class PaisController {
     @PostMapping("/api/paises")
     public ResponseEntity<GenericResponse> crearPais(@RequestBody PaisRequest pR) {
         Optional<Pais> paisCreado = paisService.crearPais(pR.codigoPais, pR.nombre);
-        if (!paisCreado.isEmpty()) {
+        if (paisCreado.isEmpty()) {
+            // crear mensaje de pais ya existe por eso no creado
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(new GenericResponse(true, "El pais fue creado con éxito", paisCreado.get().getPaisId()));
+        return ResponseEntity.ok(new GenericResponse(true, "El pais fue creado con éxito", paisCreado.get().getCodigoPais()));
     }
 
     // con filtro sin cursos: /api/paises?sinTemperaturas=true
@@ -64,7 +65,7 @@ public class PaisController {
         if (paisOp.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new GenericResponse(true, "Pais actualizado con éxito", paisOp.get().getPaisId()));
+        return ResponseEntity.ok(new GenericResponse(true, "Pais actualizado con éxito", paisOp.get().getCodigoPais()));
     }
 
 }

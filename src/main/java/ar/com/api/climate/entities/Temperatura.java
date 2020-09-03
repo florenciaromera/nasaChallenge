@@ -20,7 +20,7 @@ public class Temperatura {
     private Integer anioTemperatura;
     private Double grados;
     @ManyToOne
-    @JoinColumn(name = "pais_id", referencedColumnName = "pais_id")
+    @JoinColumn(name = "codigo_pais", referencedColumnName = "codigo_pais")
     private Pais pais;
 
     public Temperatura(){

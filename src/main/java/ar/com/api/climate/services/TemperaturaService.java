@@ -46,4 +46,8 @@ public class TemperaturaService {
         tempRepo.save(tempOp.get());
         return true;
     }
+
+	public Optional<List<Temperatura>> buscarPorAnio(Integer anio) {
+        return tempRepo.findByYear(anio);
+	}
 }

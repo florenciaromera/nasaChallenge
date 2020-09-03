@@ -19,11 +19,12 @@ public class PaisService {
     }
 
     public Optional<Pais> crearPais(Integer codigoPais, String nombre) {
-        Pais pais = new Pais(codigoPais, nombre);
         if(!paisRepo.existsById(codigoPais)){
+            Pais pais = new Pais(codigoPais, nombre);
             paisRepo.save(pais);
+            return Optional.of(pais);
         }
-        return pais != null ? Optional.of(pais) : Optional.empty();           
+        return Optional.empty();           
     }
 
     public Optional<Pais> actualizarNombrePais(Integer id, String nombre) {

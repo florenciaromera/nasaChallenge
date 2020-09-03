@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,9 +20,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "pais")
 public class Pais {
     @Id
-    @Column(name = "pais_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer paisId;
     @Column(name = "codigo_pais")
     private Integer codigoPais;
     private String nombre;
@@ -65,13 +60,4 @@ public class Pais {
     public void setTemperaturas(List<Temperatura> temperaturas) {
         this.temperaturas = temperaturas;
     }
-
-    public Integer getPaisId() {
-        return paisId;
-    }
-
-    public void setPaisId(Integer paisId) {
-        this.paisId = paisId;
-    }
-
 }
