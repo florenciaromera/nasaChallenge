@@ -10,9 +10,6 @@ import ar.com.api.climate.entities.Pais;
 
 @Repository
 public interface PaisRepo extends JpaRepository<Pais, Integer> {
-    // @Query("select p from Pais p where p.codigoPais=:codigoPais")
-    // public boolean existsByCodigo(Integer codigoPais);
-
     @Query("select p from Pais p where p.codigoPais=:codigoPais")
     public Optional<Pais> buscarPorCodigo(Integer codigoPais);
 }
